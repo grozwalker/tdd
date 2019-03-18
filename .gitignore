@@ -1,0 +1,16 @@
+/docker/dev/db
+
+/vendor/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+_ide_helper.php
+
+public/storage
+public/hot
+storage/*.key
+.env
+Homestead.yaml
+Homestead.json
+/.vagrant
