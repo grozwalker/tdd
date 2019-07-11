@@ -22,19 +22,13 @@ class ThreadController extends Controller
      */
     public function index(Channel $channel, ThreadsFilter $filter)
     {
+        $threads = Thread::latest()->filter($filter);
+
         if ($channel->exists) {
-            $threads = $channel->threads()->latest();
-        } else {
-            $threads = Thread::latest();
+            $threads->where('channel_id', $channel->id);
         }
 
-        $threads = $threads->filter($filter)->get();
-
-/*        if ($username = request('by')) {
-            $user = User::whereName($username)->firstOrFail();
-            $threads->where('user_id', $user->id);
-        }
-        $threads = $threads->get();*/
+        $threads = $threads->get();
 
         return view('thread.index', compact('threads'));
     }

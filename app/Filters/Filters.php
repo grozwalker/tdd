@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Filters;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+
+abstract class Filters
+{
+    protected $filters = [];
+
+    protected $request;
+    protected $builder;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    public function apply($builder)
+    {
+        $this->builder = $builder;
+
+        foreach ($this->getFilters() as $filter => $value) {
+            if (method_exists($this, $filter)) {
+                return $this->$filter($value);
+            }
+        }
+    }
+
+    protected function getFilters()
+    {
+        $filters = array_intersect($this->request->keys(), $this->filters);
+
+        return $this->request->only($filters);
+    }
+}
