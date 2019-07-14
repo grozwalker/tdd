@@ -24,6 +24,9 @@ migrate:
 seed:
 	@docker-compose -f docker-compose.yml -p tdd run app php artisan db:seed --force
 
+db-fresh:
+    @docker exec -it tdd_app_1 sh -c "php artisan migrate:fresh --seed --force"
+
 logs:
 	@docker-compose -f docker-compose.yml -p tdd logs --follow
 
@@ -46,7 +49,19 @@ env:
 	@docker exec -it tdd_app_1  sh -c "cp .env.docker.example .env"
 
 key-generate:
-	@docker exec -it tdd_app_1 sh -c "php artisan key:generate"
+    @docker exec -it tdd_app_1 sh -c "php artisan key:generate"
+
+eloquent:
+    @docker exec -it tdd_app_1 sh -c "php artisan ide-helper:eloquent"
+
+generate:
+    @docker exec -it tdd_app_1 sh -c "php artisan ide-helper:generate"
+
+meta:
+    @docker exec -it tdd_app_1 sh -c "php artisan ide-helper:meta"
+
+helper-generate: eloquent generate meta
+    @docker exec -it tdd_app_1 sh -c "php artisan ide-helper:models"
 
 bash:
 	docker exec -it tdd_app_1 bash

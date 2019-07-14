@@ -7,6 +7,7 @@ use App\Reply;
 use App\Thread;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Arr;
 use Tests\TestCase;
 
 class ReadThreadTest extends TestCase
@@ -77,5 +78,21 @@ class ReadThreadTest extends TestCase
             ->assertSee($threadsByAndrey->title)
             ->assertDontSee($threadsByAnother->title);
     }
+
+    /** @test */
+    function user_can_filter_threads_by_popularity()
+    {
+        $threadWithTwoReply = create(Thread::class);
+        create(Reply::class, ['thread_id' => $threadWithTwoReply->id], 2);
+
+        $threadWithThreeReply = create(Thread::class);
+        create(Reply::class, ['thread_id' => $threadWithThreeReply->id], 3);
+
+        $response = $this->getJson('threads?popular=1')->json();
+
+        $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
+
+    }
+
 
 }

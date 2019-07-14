@@ -1,4 +1,4 @@
-@foreach($thread->replies as $reply)
+@foreach($replies as $reply)
     <div class="card">
         <div class="card-header">
             <a href="#">
@@ -11,3 +11,5 @@
     </div>
     <br>
 @endforeach
+
+{{ $replies->links() }}

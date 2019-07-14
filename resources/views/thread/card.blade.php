@@ -3,7 +3,8 @@
         <a href="#">
             {{ $thread->creator->name }}
         </a>
-        write {{ $thread->title }}</div>
+        write {{ $thread->title }}
+    </div>
     <div class="card-body">
         {{ $slot }}
     </div>

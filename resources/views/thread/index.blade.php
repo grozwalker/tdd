@@ -10,11 +10,14 @@
                     <div class="card-body">
                         @foreach($threads as $thread)
                             <artice>
-                                <h3>
-                                    <a href="{{ $thread->path() }}">
-                                        {{ $thread->title }}
-                                    </a>
-                                </h3>
+                                <div class="article_header">
+                                    <h3>
+                                        <a href="{{ $thread->path() }}">
+                                            {{ $thread->title }}
+                                        </a>
+                                    </h3>
+                                    <div class="level"><a href="#">{{ $thread->replies_count }}</a></div>
+                                </div>
                                 <div class="body">
                                     {{ $thread->body }}
                                 </div>

@@ -28,7 +28,11 @@ class ThreadController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
-        $threads = $threads->get();
+        $threads = $threads->with('channel')->get();
+
+        if (request()->expectsJson()) {
+            return  response()->json($threads);
+        }
 
         return view('thread.index', compact('threads'));
     }
@@ -79,7 +83,10 @@ class ThreadController extends Controller
      */
     public function show($channel_id, Thread $thread)
     {
-        return view('thread.view', compact('thread'));
+        return view('thread.view', [
+            'thread' => $thread,
+            'replies' => $thread->replies()->paginate(5)
+        ]);
     }
 
     /**
