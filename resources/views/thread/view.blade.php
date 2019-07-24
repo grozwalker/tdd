@@ -11,7 +11,7 @@
                 @include('thread.replies')
 
                 @if(auth()->check())
-                    <form method="POST" action="{{ $thread->path() . '/replies' }}">
+                    <form method="POST" action="/threads/{{ $thread->id }}/replies">
                         @csrf
 
                         <div class="form-group">
