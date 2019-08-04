@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Traits\RecordsActivity;
 use Illuminate\Database\Eloquent\Model;
+use ReflectionClass;
 
 /**
  * App\Thread
@@ -28,6 +30,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Thread extends Model
 {
+    use RecordsActivity;
+
     protected $with = ['creator', 'channel'];
 
     protected static function boot()
