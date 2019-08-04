@@ -115,11 +115,23 @@ class ThreadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Thread  $thread
+     * @param $channel
+     * @param \App\Thread $thread
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
-        //
+
+        //dd(auth()->user());
+        $this->authorize('update', $thread);
+
+        $thread->delete();
+
+        if (request()->expectsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/threads');
     }
 }

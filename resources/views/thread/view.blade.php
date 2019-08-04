@@ -32,7 +32,7 @@
                     </div>
                     <div class="card-body">
                         This thread was published {{ $thread->created_at->diffForHumans() }}
-                        by <a href="#">{{ $thread->creator->name }}</a>, and
+                        by <a href="{{ route('profile.name', $thread->creator->name) }}">{{ $thread->creator->name }}</a>, and
                         has {{ $thread->replies_count }} {{ \Illuminate\Support\Str::plural('comment', $thread->replies_count) }}.
                     </div>
                 </div>

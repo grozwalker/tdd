@@ -3,7 +3,7 @@
         <div class="card-header">
             <div class="level">
                 <div class="info">
-                    <a href="#">
+                    <a href="{{ route('profile.name', $reply->owner->name) }}">
                         {{ $reply->owner->name }}
                     </a> said {{ $reply->created_at->diffForHumans() }}
                 </div>
