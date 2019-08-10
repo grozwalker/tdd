@@ -48,20 +48,20 @@ composer-install:
 env:
 	@docker exec -it tdd_app_1  sh -c "cp .env.docker.example .env"
 
-key-generate:
-    @docker exec -it tdd_app_1 sh -c "php artisan key:generate"
+trs:
+	@docker exec -it tdd_app_1 sh -c "php artisan key:generate"
 
 eloquent:
-    @docker exec -it tdd_app_1 sh -c "php artisan ide-helper:eloquent"
+	@docker exec -it tdd_app_1 sh -c "php artisan ide-helper:eloquent"
 
 generate:
-    @docker exec -it tdd_app_1 sh -c "php artisan ide-helper:generate"
+	@docker exec -it tdd_app_1 sh -c "php artisan ide-helper:generate"
 
 meta:
-    @docker exec -it tdd_app_1 sh -c "php artisan ide-helper:meta"
+	@docker exec -it tdd_app_1 sh -c "php artisan ide-helper:meta"
 
 helper-generate: eloquent generate meta
-    @docker exec -it tdd_app_1 sh -c "php artisan ide-helper:models"
+	@docker exec -it tdd_app_1 sh -c "php artisan ide-helper:models"
 
 bash:
 	docker exec -it tdd_app_1 bash

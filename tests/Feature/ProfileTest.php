@@ -25,6 +25,8 @@ class ProfileTest extends TestCase
     /** @test */
     public function can_see_all_user_threads()
     {
+        //$this->signIn();
+
         $profile = create(User::class);
 
         $thread = create(Thread::class, [
