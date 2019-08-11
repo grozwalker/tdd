@@ -52,5 +52,31 @@ class ParticipateInForumTest extends TestCase
             ->assertSessionHasErrors('body');
     }
 
+    /** @test */
+    public function unauth_user_can_delete_reply()
+    {
+        //$this->withoutExceptionHandling();
 
+        $reply = create(Reply::class);
+
+        $this->delete('/replies/'. $reply->id)
+            ->assertRedirect('/login');
+
+        $this->signIn()
+            ->delete('/replies/'. $reply->id)
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function auth_user_can_delete_own_reply()
+    {
+        $this->signIn();
+
+        $reply = create(Reply::class, ['user_id' => auth()->id()]);
+
+        $this->delete('/replies/'. $reply->id)
+            ->assertStatus(302);
+
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
 }
