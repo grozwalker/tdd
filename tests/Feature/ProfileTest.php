@@ -25,15 +25,13 @@ class ProfileTest extends TestCase
     /** @test */
     public function can_see_all_user_threads()
     {
-        //$this->signIn();
-
-        $profile = create(User::class);
+        $this->signIn();
 
         $thread = create(Thread::class, [
-            'user_id' => $profile->id,
+            'user_id' => auth()->id(),
         ]);
 
-        $this->get('/profile/' . $profile->name)
+        $this->get('/profile/' . auth()->user()->name)
             ->assertSee($thread->title);
     }
 }
