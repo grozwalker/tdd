@@ -38,3 +38,13 @@ services:
     #- ~/.ssh:/home/docker-user/.ssh -- pass your local ssh key
     depends_on:
       - db
+
+  node:
+    build:
+      context: ./
+      dockerfile: docker/dev/node.Dockerfile
+    image: tdd_node
+    container_name: tdd_node_1
+    tty: true
+    volumes:
+      - ./:/var/www

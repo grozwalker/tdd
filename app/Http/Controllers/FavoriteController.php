@@ -17,6 +17,6 @@ class FavoriteController extends Controller
     {
         $reply->addToFavorite();
 
-        return redirect()->back();
+        return redirect()->back()->with('flash', 'Successfully add to favorite');
     }
 }
