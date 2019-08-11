@@ -13,6 +13,15 @@ class ReplyController extends Controller
         $this->middleware('auth');
     }
 
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $this->validate(request(), ['body' => 'required']);
+
+        $reply->update(request(['body']));
+    }
+
     public function store(Thread $thread)
     {
         $this->validate(request(), ['body' => 'required']);

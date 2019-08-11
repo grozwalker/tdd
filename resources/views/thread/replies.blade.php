@@ -1,4 +1,5 @@
 @foreach($replies as $reply)
+<reply :attributes="{{ $reply }}" inline-template v-cloak>
     <div id="reply-{{ $reply->id }}" class="card">
         <div class="card-header">
             <div class="level">
@@ -17,11 +18,20 @@
             </div>
         </div>
         <div class="card-body">
-            {{ $reply->body }}
+            <div v-if="editing">
+                <div class="form-group">
+                    <textarea class="form-control" v-model="body"></textarea>
+                </div>
+                <button type="submit" class="btn btn-sm btn-link mr-4" @click="editing = false">Close</button>
+                <button type="submit" class="btn btn-sm btn-success" @click="update()">Save</button>
+            </div>
+            <div v-else v-text="body">
+            </div>
         </div>
 
         @can ('update', $reply)
-            <div class="card-footer">
+            <div class="card-footer level">
+                <button type="submit" class="btn btn-sm btn-secondary" @click="editing = true">Edit</button>
                 <form method="POST" action="/replies/{{ $reply->id }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
@@ -31,7 +41,8 @@
             </div>
         @endcan
     </div>
-    <br>
+</reply>
+<br>
 @endforeach
 
 {{ $replies->links() }}
