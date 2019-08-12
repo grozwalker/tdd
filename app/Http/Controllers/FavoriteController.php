@@ -19,4 +19,9 @@ class FavoriteController extends Controller
 
         return redirect()->back()->with('flash', 'Successfully add to favorite');
     }
+
+    public function destroy(Reply $reply)
+    {
+        $reply->removeFromFavorite();
+    }
 }

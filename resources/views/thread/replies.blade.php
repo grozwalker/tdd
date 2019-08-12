@@ -9,12 +9,7 @@
                     </a> said {{ $reply->created_at->diffForHumans() }}
                 </div>
 
-                <form method="post" action="/replies/{{ $reply->id }}/favorites">
-                    {{ csrf_field() }}
-                    <button type="submit" class="btn" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                        {{ $reply->favorites_count }} {{ \Illuminate\Support\Str::plural('Favorite', $reply->favorites_count) }}
-                    </button>
-                </form>
+                <favorite :reply="{{ $reply }}" v-cloak></favorite>
             </div>
         </div>
         <div class="card-body">
