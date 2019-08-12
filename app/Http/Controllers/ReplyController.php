@@ -39,6 +39,10 @@ class ReplyController extends Controller
 
         $reply->delete();
 
+        if (request()->expectsJson()) {
+            return response()->json(['data' => 'Delete successful']);
+        }
+
         return back();
     }
 }

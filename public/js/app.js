@@ -1767,6 +1767,15 @@ __webpack_require__.r(__webpack_exports__);
         _this.editing = false;
         flash('Reply is updated');
       });
+    },
+    destroy: function destroy() {
+      var _this2 = this;
+
+      axios["delete"]('/replies/' + this.attributes.id).then(function () {
+        $(_this2.$el).fadeOut(300, function () {
+          flash('Reply is deleted');
+        });
+      });
     }
   }
 });

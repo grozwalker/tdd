@@ -20,6 +20,16 @@
                         flash('Reply is updated');
                     }
                 );
+            },
+
+            destroy: function () {
+                axios.delete('/replies/' + this.attributes.id).then(
+                    () => {
+                        $(this.$el).fadeOut(300, () => {
+                            flash('Reply is deleted');
+                        });
+                    }
+                );
             }
         }
     }
