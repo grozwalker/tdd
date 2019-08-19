@@ -9,23 +9,9 @@
                         {{ $thread->body }}
                     @endcomponent
 
-                    <replies :data="{{ $thread->replies }}" @reduce="reduce()"></replies>
+                    <replies :data="{{ $thread->replies }}" @added="added" @reduce="reduce()"></replies>
 
                     {{--@include('thread.replies')--}}
-
-                    @if(auth()->check())
-                        <form method="POST" action="/threads/{{ $thread->id }}/replies">
-                            @csrf
-
-                            <div class="form-group">
-                                <textarea class="form-control" id="body" name="body" rows="5" placeholder="Type your answear"></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Add</button>
-                        </form>
-                    @else
-                        <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in forum.</p>
-                    @endif
                 </div>
 
                 <div class="col-md-4">

@@ -15,6 +15,10 @@
         },
 
         methods: {
+            added: function () {
+                this.repliesCount++;
+            },
+
             reduce: function () {
                 this.repliesCount--;
             }
