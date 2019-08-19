@@ -14,14 +14,17 @@ window.Vue = require('vue');
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
  *
- * Eg. ./components/flash.vue -> <example-component></example-component>
+ * Eg. ./components/Flash.vue -> <example-component></example-component>
  */
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('flash', require('./components/flash.vue').default);
-Vue.component('reply', require('./components/reply.vue').default);
+Vue.component('flash', require('./components/Flash.vue').default);
+//Vue.component('reply', require('./components/Reply.vue').default);
+//Vue.component('replies', require('./components/Replies.vue').default);
+
+Vue.component('thread-view', require('./pages/Thread').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
