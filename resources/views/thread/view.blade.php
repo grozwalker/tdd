@@ -9,7 +9,7 @@
                         {{ $thread->body }}
                     @endcomponent
 
-                    <replies :data="{{ $thread->replies }}" @added="added" @reduce="reduce()"></replies>
+                    <replies @added="added" @reduce="reduce()"></replies>
 
                     {{--@include('thread.replies')--}}
                 </div>

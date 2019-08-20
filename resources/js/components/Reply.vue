@@ -5,7 +5,7 @@
                 <div class="info">
                     <a :href="`/profile/${reply.owner.name}`">
                         {{ reply.owner.name }}
-                    </a> said {{ reply.created_at}}
+                    </a> said <span v-text="fromAgo"></span> ago...
                 </div>
 
 <!--                @auth-->
@@ -37,6 +37,7 @@
 
 <script>
     import favorite from "./Favorite";
+    import moment from "moment";
 
     export default {
         props: ['data'],
@@ -52,6 +53,10 @@
         },
 
         computed: {
+            fromAgo: function() {
+                return moment(this.reply.created_at).fromNow();
+            },
+
             signedIn: function() {
                 return window.App.signedIn
             },

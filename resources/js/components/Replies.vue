@@ -4,6 +4,7 @@
             <reply :data="reply" @destroy="remove"></reply>
         </div>
 
+        <paginator :data-set="dataSet" @refetch="fetch"></paginator>
 
         <new-reply @added="add"></new-reply>
     </div>
@@ -12,35 +13,47 @@
 <script>
     import Reply from './Reply';
     import NewReply from "./NewReply";
+    import collection from "../mixins/collection";
 
     export default {
         name: "Replies",
 
-        props: ['data'],
-
         components: { Reply, NewReply },
+
+        mixins: [collection],
 
         data() {
             return {
-                replies: this.data
+                replies: [],
+                dataSet: null
             }
         },
 
-        methods: {
-            add: function(data) {
-                this.replies.push(data);
+        computed: {
+            url: function () {
+                return location.pathname + '/replies';
+            }
+        },
 
-                this.$emit('added');
+        created() {
+          this.fetch();
+        },
+
+        methods: {
+            fetch: function (page) {
+
+                if (! page) {
+                    const query = location.search.match(/page=(\d+)/);
+
+                    page = query ? query[1] : 1;
+                }
+
+                axios.get(`${this.url}?page=${page}`).then(( {data} ) => this.refresh(data));
             },
 
-            remove: function (id) {
-                this.replies = this.replies.filter(reply => {
-                   return reply.id !==  id;
-                });
-
-                this.$emit('reduce');
-
-                flash('Reply has been deleted');
+            refresh: function (response) {
+                this.replies = response.data;
+                this.dataSet = response;
             }
         }
     }
