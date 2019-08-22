@@ -21,7 +21,7 @@ class ParticipateInForumTest extends TestCase
 
         $thread = create(Thread::class);
 
-        $this->post('/threads/'. $thread->id . '/replies', []);
+        $this->post($thread->path() . '/replies', []);
     }
 
     /** @test */
@@ -33,10 +33,13 @@ class ParticipateInForumTest extends TestCase
 
         $reply = make(Reply::class);
 
-        $this->post('/threads/'. $thread->id . '/replies', $reply->toArray());
+        $this->post($thread->path() . '/replies', $reply->toArray());
 
-        $this->get($thread->path())
-            ->assertSee($reply->body);
+        $this->assertDatabaseHas('replies', [
+            'body' => $reply->body
+        ]);
+
+        $this->assertEquals(1, $thread->refresh()->replies_count);
     }
 
     /** @test */
@@ -48,7 +51,7 @@ class ParticipateInForumTest extends TestCase
 
         $reply = make(Reply::class, ['body' => null]);
 
-        $this->post('/threads/'. $thread->id . '/replies', $reply->toArray())
+        $this->post($thread->path() . '/replies', $reply->toArray())
             ->assertSessionHasErrors('body');
     }
 
@@ -72,12 +75,19 @@ class ParticipateInForumTest extends TestCase
     {
         $this->signIn();
 
-        $reply = create(Reply::class, ['user_id' => auth()->id()]);
+        $thread = create(Thread::class);
+
+        $reply = create(Reply::class, [
+            'user_id' => auth()->id(),
+            'thread_id' => $thread->id
+        ]);
 
         $this->delete('/replies/'. $reply->id)
             ->assertStatus(302);
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
+        $this->assertEquals(0, $thread->refresh()->replies_count);
     }
 
     /** @test */

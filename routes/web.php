@@ -27,7 +27,7 @@ Route::delete('/threads/{channel}/{thread}', 'ThreadController@destroy');
 
 
 Route::get('/threads/{channel}/{thread}/replies', 'ReplyController@index');
-Route::post('threads/{channel}/{thread}/replies', 'ReplyController@store');
+Route::post('/threads/{channel}/{thread}/replies', 'ReplyController@store');
 
 Route::delete('replies/{reply}', 'ReplyController@destroy');
 Route::patch('replies/{reply}', 'ReplyController@update');
