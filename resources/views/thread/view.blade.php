@@ -24,6 +24,11 @@
                             by <a href="{{ route('profile.name', $thread->creator->name) }}">{{ $thread->creator->name }}</a>, and
                             has @{{ repliesCount }}
                             {{--has {{ $thread->replies_count }} {{ \Illuminate\Support\Str::plural('comment', $thread->replies_count) }}.--}}
+                            <div>
+                                <subscribe-button :active="{{ json_encode($thread->isSubscribeTo) }}">
+
+                                </subscribe-button>
+                            </div>
                         </div>
                     </div>
                 </div>

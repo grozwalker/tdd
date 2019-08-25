@@ -65,3 +65,6 @@ helper-generate: eloquent generate meta
 
 bash:
 	docker exec -it tdd_app_1 bash
+
+node:
+	docker exec -it tdd_node_1 bash
