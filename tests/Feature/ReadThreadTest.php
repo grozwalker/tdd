@@ -87,11 +87,11 @@ class ReadThreadTest extends TestCase
     {
         $thread = create(Thread::class);
 
-        create(Reply::class, ['thread_id' => $thread->id], 3);
+        create(Reply::class, ['thread_id' => $thread->id], $quantity = 3);
 
         $response = $this->getJson('threads?unanswered=1')->json();
 
-        $this->assertEquals(1, $thread->refresh()->replies_count);
+        $this->assertEquals($quantity, $thread->refresh()->replies_count);
 
     }
 
